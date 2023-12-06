@@ -8,12 +8,8 @@ public class Marble : MonoBehaviour {
     private Rigidbody rb;
     private float timer = 1f;
     public GameObject circle;
+    public GameObject floatingScore;
 
-    //private void Awake()
-    //{
-    //    circle = GameObject.FindWithTag("invisibleCircle");
-    //    Debug.Log(circle);
-    //}
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
@@ -32,26 +28,19 @@ public class Marble : MonoBehaviour {
         if (!isMoving && isOut) {
             timer -= Time.deltaTime;
             if (timer <= 0.0f) {
+                Instantiate(floatingScore, transform.position, Quaternion.identity);
+                ScoreManager.instance.AddScore();
                 Destroy(gameObject);
-                //Debug.Log("Score!!");
             }
         }
     }
 
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    Debug.Log(collision.gameObject);
-    //}
 
     private void OnTriggerExit(Collider colliderInfo) {
-        ///Debug.Log(colliderInfo.gameObject);
-
         if (colliderInfo.gameObject.CompareTag("Circle")) {
 
             isOut = true;
         }
-
-        //Debug.Log(isOut);
     }
 
 }
